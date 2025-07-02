@@ -173,7 +173,47 @@ The evaluation result on the MicroMat-3K dataset would be as follows:
   journal={arXiv preprint arXiv:2411.00626},
   year={2024}
 }
+
+## Video Segmentation Pipeline
+
+This project provides a sample pipeline that combines **SAMURAI** tracking with **ZIM** high-resolution segmentation. The pipeline processes an input mp4 video and produces an overlay video with refined masks.
+
+### Installation
+```bash
+pip install -r requirements.txt
 ```
+Clone the SAMURAI repository and install it following the official instructions.
+
+### Example Usage
+```bash
+python -m pipeline.run_pipeline --config config.json
+```
+The JSON config specifies paths for input video, directories for intermediate results and ONNX model weights.
+
+### Input and Output
+- **Input**: mp4 video file and a text file containing the first-frame bounding box coordinates `x1 y1 x2 y2`.
+- **Output**: an mp4 file with the segmentation mask overlay and intermediate mask images.
+
+### Interactive BBox Selection (Jupyter)
+```python
+import cv2
+from matplotlib import pyplot as plt
+from matplotlib.widgets import RectangleSelector
+
+img = cv2.cvtColor(cv2.imread("frame_0000.jpg"), cv2.COLOR_BGR2RGB)
+bbox = []
+
+def onselect(eclick, erelease):
+    bbox[:] = [int(eclick.xdata), int(eclick.ydata), int(erelease.xdata), int(erelease.ydata)]
+
+fig, ax = plt.subplots()
+ax.imshow(img)
+RectangleSelector(ax, onselect, drawtype="box")
+plt.show()
+print("Selected bbox:", bbox)
+```
+This snippet displays the first frame and lets you drag a rectangle to define the bounding box. Save the coordinates to a text file for use in the pipeline.
+
 
 ## License
 
@@ -182,3 +222,5 @@ ZIM
 Copyright (c) 2024-present NAVER Cloud Corp.
 CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/)  
 ```
+
+
