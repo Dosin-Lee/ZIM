@@ -1,0 +1,2 @@
+"""Video segmentation pipeline package."""
+

@@ -1,10 +1,5 @@
 """
-Copyright (c) 2024-present Naver Cloud Corp.
-This source code is based on code from the Segment Anything Model (SAM)
-(https://github.com/facebookresearch/segment-anything).
-
-This source code is licensed under the license found in the
-LICENSE file in the root directory of this source tree.
+Setup script for installing the `zim_anything` package.
 """
 
 from setuptools import find_packages, setup
@@ -19,3 +14,4 @@ setup(
         "dev": ["flake8", "isort", "black", "mypy"],
     },
 )
+
